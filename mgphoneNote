@@ -5,3 +5,9 @@ in lesson 2 learn
 middleware 
 improve errorHandler
 cors for accept 
+
+in lesson 3 
+template literal..thereis alot to do
+model schemal need to polish ref:user
+mongoose.sequence ..remind me of schema plugin
+mongoose.connection.once && mongoose.connection.on
