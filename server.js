@@ -1,3 +1,5 @@
+
+require('dotenv').config()
 const express=require ("express")
 const app=express()
 const path=require('path')
@@ -33,7 +35,7 @@ app.all("*",(req,res)=>{
 
 app.use(errorHandler)
 app.listen(PORT,()=>{
-  console.log(`Server is listening on port 8080 ${PORT}`)
+  console.log(`Server is listening on port ${PORT}`)
 
   
 })
