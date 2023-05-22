@@ -11,3 +11,7 @@ template literal..thereis alot to do
 model schemal need to polish ref:user
 mongoose.sequence ..remind me of schema plugin
 mongoose.connection.once && mongoose.connection.on
+
+in lesson4
+learn when i save data.. can not save req.body with plain user ref..need user.id
+Note schema plugin is not support in latest 7.11.0 mongoose
