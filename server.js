@@ -1,58 +1,59 @@
-require ('dotenv').config()
-const express=require ("express")
-const app=express()
+require("dotenv").config();
+const express = require("express");
+const app = express();
 
-const path=require('path')
-const{logger,logEvents }=require('./middleware/logger')
-const errorHandler=require('./middleware/errorHandler')
-const cookieParser=require('cookie-parser')
-const cors=require('cors')
-const corsOptions=require('./config/corsOptions')
-const connectDb=require('./config/dbConn')
-const { default: mongoose } = require('mongoose')
-const { log } = require('console')
-const PORT=process.env.PORT||3000
-
+const path = require("path");
+const { logger, logEvents } = require("./middleware/logger");
+const errorHandler = require("./middleware/errorHandler");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
+const connectDb = require("./config/dbConn");
+const { default: mongoose } = require("mongoose");
+const { log } = require("console");
+const PORT = process.env.PORT || 4000;
 
 connectDb();
+// mongoose.connect('mongodb://127.0.0.1:27017/technote', () => {
+//   console.log('Connected to mongo db')
+// })
 
-app.use(logger)
-app.use(cors(corsOptions))
+app.use(logger);
+app.use(cors(corsOptions));
 
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
-
-app.use('/', express.static(path.join(__dirname, 'public')))
+app.use("/", express.static(path.join(__dirname, "public")));
 
 //Router
-app.use('/',require('./routes/root'))
-app.use('/users',require('./routes/userRoutes'))
-app.use('/notes',require('./routes/noteRouters'))
+app.use("/", require("./routes/root"));
+app.use("/users", require("./routes/userRoutes"));
+app.use("/notes", require("./routes/noteRouters"));
 
-app.all('*', (req, res) => {
-  res.status(404)
-  if (req.accepts('html')) {
-      res.sendFile(path.join(__dirname, 'views', '404.html'))
-  } else if (req.accepts('json')) {
-      res.json({ message: '404 Not Found' })
+app.all("*", (req, res) => {
+  res.status(404);
+  if (req.accepts("html")) {
+    res.sendFile(path.join(__dirname, "views", "404.html"));
+  } else if (req.accepts("json")) {
+    res.json({ message: "404 Not Found" });
   } else {
-      res.type('txt').send('404 Not Found')
+    res.type("txt").send("404 Not Found");
   }
-})
-app.use(errorHandler)
+});
+app.use(errorHandler);
 
-mongoose.connection.once('open',()=>{
-  console.log('Connect to the Mongodb');
-  app.listen(PORT,()=>{
-    console.log(`Server is listening on port ${PORT}`)
-  })
-})
+mongoose.connection.once("open", () => {
+  console.log("Connect to the Mongodb");
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
+  });
+});
 
-mongoose.connection.on('error',err=>{
+mongoose.connection.on("error", (err) => {
   console.log(err);
-  logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log')
-})
-
-
-
+  logEvents(
+    `${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`,
+    "mongoErrLog.log"
+  );
+});

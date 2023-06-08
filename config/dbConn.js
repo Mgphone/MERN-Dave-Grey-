@@ -1,9 +1,9 @@
 const mongoose=require('mongoose')
 mongoose.set("strictQuery", false);
 
-const connectDb=async()=>{
+const connectDb=()=>{
   try {
-    await mongoose.connect(process.env.DATABASE_URI)
+     mongoose.connect(process.env.DATABASE_URI)
   } catch (error) {
     console.log(error);
   }
